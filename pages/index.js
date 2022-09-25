@@ -1,4 +1,5 @@
 import Link from 'next/link';
+import Footer from '../components/Footer';
 import Header from '../components/Header';
 
 export default function Home() {
@@ -70,6 +71,7 @@ export default function Home() {
         </div>
       </div>
       {/* <!-- section 4 end --> */}
+      <Footer />
     </div>
   );
 }
