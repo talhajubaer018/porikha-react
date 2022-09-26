@@ -10,7 +10,7 @@ const Dashboard = () => {
         <div class='text-center'>
           <div>
             <div class='relative w-1/3 mx-auto'>
-              <img class='rounded-full' src='../assets/images/avatar-2.png' />
+              <img class='rounded-full' src='/avatar-2.png' />
               <div class='absolute right-0 bottom-0 bg-customBlue-800 rounded-full py-2 px-3 sm:py-0 sm:px-1'>
                 <font-awesome-icon class=' text-white sm:text-sm' icon="['fas', 'pen']" />
               </div>
