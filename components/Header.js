@@ -12,18 +12,18 @@ const Header = () => {
   const logout = () => async () => {
     const headers = {
       headers: {
-        Authorization: `Bearer ${userTokenFromStorage}`,
+        Authorization: `Bearer ${token}`,
       },
     }
     try {
       const res = await axios.get(`${process.env.NEXT_PUBLIC_API}/logout`, headers)
-      await router.push('/')
 
       localStorage.removeItem('userInfo')
       localStorage.removeItem('userPhone')
 
       console.log('successful logout')
       console.log(res)
+      router.push('/login')
     } catch (error) {
       console.log(error)
     }
@@ -51,12 +51,17 @@ const Header = () => {
         </div>
         <div id='navigation' className='navbar-hidden hidden absolute sm:relative left-0 sm:left-auto bottom-0 sm:bottom:auto w-full sm:w-auto transform -translate-x-1/2 sm:translate-x-0 h-screen sm:h-auto text-center justify-center bg-customBlue-1000 sm:bg-transparent profile ml-auto flex-col sm:flex sm:flex-row place-items-center pb-24 sm:pb-0 gap-0 sm:gap-2'>
           {/* <font-awesome-icon onClick='crossClicked' className='fa-lg block sm:hidden absolute top-0 right-0 m-6' icon="['fas', 'times']" /> */}
-          <Link v-if='!this.userInfo' href='/login'>
-            <h3 className='text-3xl sm:text-xl hover:text-customBlue-500 hover:bg-white rounded-md cursor-pointer px-4 py-4'>{/* <!-- login -->*/}লগইন</h3>
-          </Link>
-          <Link v-if='!this.userInfo' href='/register'>
-            <h3 className='text-3xl sm:text-xl hover:text-customBlue-500 hover:bg-white text-white rounded-md cursor-pointer px-4 py-4'>{/* <!-- register -->*/}রেজিস্টার</h3>
-          </Link>
+          {!token && (
+            <>
+              <Link href='/login'>
+                <h3 className='text-3xl sm:text-xl hover:text-customBlue-500 hover:bg-white rounded-md cursor-pointer px-4 py-4'>{/* <!-- login -->*/}লগইন</h3>
+              </Link>
+              <Link href='/register'>
+                <h3 className='text-3xl sm:text-xl hover:text-customBlue-500 hover:bg-white text-white rounded-md cursor-pointer px-4 py-4'>{/* <!-- register -->*/}রেজিস্টার</h3>
+              </Link>
+            </>
+          )}
+
           <Link href='/'>
             <h3 className='text-3xl sm:text-xl hover:text-customBlue-500 hover:bg-white text-white rounded-md cursor-pointer px-4 py-4'>{/* <!-- home -->*/}হোম</h3>
           </Link>
@@ -76,10 +81,12 @@ const Header = () => {
                   {user?.name}
                   {/* <font-awesome-icon className='text-sm hidden sm:inline-block' icon="['fas', 'chevron-down']"/> */}
                 </h3>
-                
+
                 <div className='header-dropdown sm:w-full lg:w-1/2 right-0 ml-auto absolute top-full bg-customBlue-1000 text-white text-3xl sm:text-xl rounded-b-lg text-center left-0'>
-                  <h4 className='text-3xl sm:text-xl hover:text-customBlue-900 hover:bg-white text-white hover:shadow-lg cursor-pointer px-4 py-2'>প্রোফাইল</h4>
-                  <h4 onClick={logout} className='text-3xl sm:text-xl hover:text-customBlue-900 hover:bg-white text-white hover:shadow-lg cursor-pointer rounded-b-lg px-4 py-2'>
+                  <Link href='/dashboard'>
+                    <h4 className='text-3xl sm:text-xl hover:text-customBlue-900 hover:bg-white text-white hover:shadow-lg cursor-pointer px-4 py-2'>প্রোফাইল</h4>
+                  </Link>
+                  <h4 onClick={logout()} className='text-3xl sm:text-xl hover:text-customBlue-900 hover:bg-white text-white hover:shadow-lg cursor-pointer rounded-b-lg px-4 py-2'>
                     লগ আউট
                   </h4>
                 </div>
@@ -97,16 +104,16 @@ const Header = () => {
             <font-awesome-icon className='text-sm hidden sm:inline-block' icon="['fas', 'chevron-down']" />
           </h3>
           <div className='w-full'>
-            <Link v-if='!this.userInfo' href='/login'>
-              <h3 onClick='crossClicked' className='text-3xl sm:text-xl hover:text-customBlue-500 hover:bg-white rounded-md cursor-pointer px-4 py-4'>
-                {/* <!-- login -->*/}লগইন
-              </h3>
-            </Link>
-            <Link v-if='!this.userInfo' href='/register'>
-              <h3 onClick='crossClicked' className='text-3xl sm:text-xl hover:text-customBlue-500 hover:bg-white text-white rounded-md cursor-pointer px-4 py-4'>
-                {/* <!-- register -->*/}রেজিস্টার
-              </h3>
-            </Link>
+            {!token && (
+              <>
+                <Link href='/login'>
+                  <h3 className='text-3xl sm:text-xl hover:text-customBlue-500 hover:bg-white rounded-md cursor-pointer px-4 py-4'>{/* <!-- login -->*/}লগইন</h3>
+                </Link>
+                <Link href='/register'>
+                  <h3 className='text-3xl sm:text-xl hover:text-customBlue-500 hover:bg-white text-white rounded-md cursor-pointer px-4 py-4'>{/* <!-- register -->*/}রেজিস্টার</h3>
+                </Link>
+              </>
+            )}
             <Link href='/'>
               <h3 onClick='crossClicked' className='text-3xl sm:text-xl hover:text-customBlue-500 hover:bg-white text-white rounded-md cursor-pointer px-4 py-4'>
                 {/* <!-- home -->*/}হোম
@@ -132,8 +139,8 @@ const Header = () => {
                 {/* <!-- dashboard -->*/}ড্যাশবোর্ড
               </h3>
             </Link>
-            <Link href='/' className=''>
-              <h3 onClick='crossClicked' className='text-3xl sm:text-xl hover:text-customBlue-500 bg-customBlue-1200 text-red-700 hover:bg-white rounded-md cursor-pointer px-4 py-4'>
+            <Link href='' className=''>
+              <h3 onClick={logout()} className='text-3xl sm:text-xl hover:text-customBlue-500 bg-customBlue-1200 text-red-700 hover:bg-white rounded-md cursor-pointer px-4 py-4'>
                 {/* <!-- logout -->*/}লগ আউট
               </h3>
             </Link>
