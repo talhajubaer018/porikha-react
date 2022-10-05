@@ -2,6 +2,7 @@ import Link from 'next/link'
 import React, { useEffect, useState } from 'react'
 import { useRouter } from 'next/router'
 import axios from 'axios'
+import Image from 'next/image'
 
 const Header = () => {
   const router = useRouter()
@@ -28,7 +29,7 @@ const Header = () => {
       console.log(error)
     }
   }
-  const setValue = () => {
+  const setUserValue = () => {
     if (typeof window !== 'undefined') {
       var userInfoFromStorage = localStorage.getItem('userInfo') ? JSON.parse(localStorage.getItem('userInfo')) : null
       var userTokenFromStorage = localStorage.getItem('userToken') ? JSON.parse(localStorage.getItem('userToken')) : null
@@ -38,7 +39,7 @@ const Header = () => {
   }
 
   useEffect(() => {
-    setValue()
+    setUserValue()
   }, [])
 
   return (
@@ -46,7 +47,7 @@ const Header = () => {
       <div className='container mx-auto flex flex-row place-items-center'>
         <div className='logo'>
           <Link href='/'>
-            <img className='w-36' src='/logo.png' alt='' />
+            <Image src='/logo.png' alt='' layout='responsive' width={50} height={50} />
           </Link>
         </div>
         <div id='navigation' className='navbar-hidden hidden absolute sm:relative left-0 sm:left-auto bottom-0 sm:bottom:auto w-full sm:w-auto transform -translate-x-1/2 sm:translate-x-0 h-screen sm:h-auto text-center justify-center bg-customBlue-1000 sm:bg-transparent profile ml-auto flex-col sm:flex sm:flex-row place-items-center pb-24 sm:pb-0 gap-0 sm:gap-2'>
@@ -82,7 +83,7 @@ const Header = () => {
                   {/* <font-awesome-icon className='text-sm hidden sm:inline-block' icon="['fas', 'chevron-down']"/> */}
                 </h3>
 
-                <div className='header-dropdown sm:w-full lg:w-1/2 right-0 ml-auto absolute top-full bg-customBlue-1000 text-white text-3xl sm:text-xl rounded-b-lg text-center left-0'>
+                <div className='header-dropdown sm:w-full right-0 ml-auto absolute top-full bg-customBlue-1000 text-white text-3xl sm:text-xl rounded-b-lg text-center left-0'>
                   <Link href='/dashboard'>
                     <h4 className='text-3xl sm:text-xl hover:text-customBlue-900 hover:bg-white text-white hover:shadow-lg cursor-pointer px-4 py-2'>প্রোফাইল</h4>
                   </Link>
@@ -92,13 +93,13 @@ const Header = () => {
                 </div>
               </div>
             )}
-            <img className='w-2/4 sm:w-1/3 lg:w-1/6 rounded-full ml-0 sm:ml-2' src='/avatar-2.png' />
+            <Image src='/avatar-2.png' className='w-2/4 sm:w-1/3 lg:w-1/6 rounded-full ml-0 sm:ml-2' alt='' layout='responsive' width={50} height={50} />
           </div>
         </div>
 
         <div id='navigation-mobile' className='navbar-hidden z-50 absolute sm:relative left-0 sm:left-auto bottom-0 sm:bottom:auto w-full sm:w-auto transform -translate-x-1/2 sm:translate-x-0 h-screen sm:h-auto text-center justify-center bg-customBlue-1000 sm:bg-transparent profile ml-auto sm:hidden flex-col sm:flex-row place-items-center sm:pb-0 gap-0 sm:gap-2'>
           <font-awesome-icon onClick='crossClicked' className='fa-lg block sm:hidden absolute top-0 right-0 m-6' icon="['fas', 'times']" />
-          <img className='w-1/5 sm:w-1/5 rounded-full mx-auto mt-6' src='/avatar-2.png' />
+          <Image src='/avatar-2.png' className='w-1/5 sm:w-1/5 rounded-full mx-auto mt-6' alt='' layout='responsive' width={50} height={50} />
           <h3 className='relative w-full text-3xl sm:text-xl hover:text-customBlue-500 hover:bg-white text-white rounded-md cursor-pointer px-4 py-4'>
             {user?.name}
             <font-awesome-icon className='text-sm hidden sm:inline-block' icon="['fas', 'chevron-down']" />
